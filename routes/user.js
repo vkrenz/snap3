@@ -11,6 +11,7 @@
 const router = require('express').Router()
 
 // General Settings
+const bcrypt = require('bcryptjs');
 const fs = require('fs')
 const path = require('path')
 // require('dotenv/config')
@@ -183,27 +184,33 @@ registerValidationRules,
                             data: fs.readFileSync(path.join(__dirname, '..', 'tmp', 'upload', req.file.filename)),
                             contentType: 'image/png'
                         } : undefined
-                        // Create a new user in web322.users
-                        new User({
-                            profilePhoto: profilePhoto == undefined ? '' : `/tmp/${req.file.filename}`,
-                            // coverPhoto: {
-                            //     data: fs.readFileSync(path.join(__dirname + '/upload/' + req.file.filename)),
-                            //     contentType: 'image/png'
-                            // },
-                            username: username,
-                            email: email,
-                            password: password,
-                            fullName: fullName,
-                            phoneNumber: phoneNumber == undefined ? null : phoneNumber,
-                            companyName: companyName,
-                            country: country == undefined ? null : country,
-                            city: city == undefined ? null : city,
-                            postalCode: postalCode == undefined ? null : postalCode
-                        }).save().then(() => {
-                            console.log(`New User (${username})`)
-                        }).catch(err => {
-                            console.log(`Error: ${err}`)
+                        // Encrypt the plain text: "myPassword123"
+                        bcrypt.hash(password, 10).then(hash=>{
+                            // Create a new user in web322.users
+                            new User({
+                                profilePhoto: profilePhoto == undefined ? '' : `/tmp/${req.file.filename}`,
+                                // coverPhoto: {
+                                //     data: fs.readFileSync(path.join(__dirname + '/upload/' + req.file.filename)),
+                                //     contentType: 'image/png'
+                                // },
+                                username: username,
+                                email: email,
+                                password: hash,
+                                fullName: fullName,
+                                phoneNumber: phoneNumber == undefined ? null : phoneNumber,
+                                companyName: companyName,
+                                country: country == undefined ? null : country,
+                                city: city == undefined ? null : city,
+                                postalCode: postalCode == undefined ? null : postalCode
+                            }).save().then(() => {
+                                console.log(`New User (${username})`)
+                            }).catch(err => {
+                                console.log(`Error: ${err}`)
+                            })
                         })
+                        .catch(err=>{
+                            console.log(err);
+                        });
                         const newUser = {
                             profilePhoto: profilePhoto,
                             username: username,
@@ -346,21 +353,23 @@ router.post('/auth/login', loginValidationRules, (req, res) => {
                 renderLoginPageErr(res, Err, err, username, password)
             }else if(user != null) {
                 // Validate if password matches...
-                if(password == user.password) {
-                    console.log('Password matches! :D')
-                    // Log user in
-                    req.session.userLoggedIn = true
-                    // Pass user data to req.session
-                    req.session.user = user
-                    req.session.username = user.username
-                    req.session.isAdmin = req.session.user.userType == 'admin' ? true : false
-                    res.redirect(`/user/dash/${username}`)
-                }else{
-                    console.log('Password doesn\'t match :(')
-                    Err = 'Incorrect password'
-                    renderLoginPageErr(res, Err, err, username, password)
-                    // console.log(`input: ${password}, user: ${user.password}`)
-                }
+                bcrypt.compare(password, hash).then((result) => {
+                    if(result == user.password) {
+                        console.log('Password matches! :D')
+                        // Log user in
+                        req.session.userLoggedIn = true
+                        // Pass user data to req.session
+                        req.session.user = user
+                        req.session.username = user.username
+                        req.session.isAdmin = req.session.user.userType == 'admin' ? true : false
+                        res.redirect(`/user/dash/${username}`)
+                    }else{
+                        console.log('Password doesn\'t match :(')
+                        Err = 'Incorrect password'
+                        renderLoginPageErr(res, Err, err, username, password)
+                        // console.log(`input: ${password}, user: ${user.password}`)
+                    }      
+                });
             }else{
                 Err = `'<strong>${username}</strong>' does not exist. <a href="/user/register/${username}" class="alert-link">Sign Up?</a>`
                 console.log(`${username} does not exist`)
