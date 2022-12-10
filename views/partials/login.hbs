@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snap! | Log In</title>
+    {{!-- Bootstrap CDN --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    {{!-- Font Awesome CDN --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    {{!-- Custom CSS --}}
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" href="/css/gradient-button.css">
+    <link rel="stylesheet" href="/css/gradient-background.css">
+</head>
+<body>
+
+{{!-- Navbar Start --}}
+<nav class="navbar fixed-top navbar-expand-lg bg-light shadow-lg" id="navbar">
+    <div class="container">
+        <a class="navbar-brand" href="/home">
+            <img src="/img/snap-logo.png" alt="Snap! Logo" height="70px" width="auto">
+            <span class="navbar-brand mb-0 h1">
+                <em><strong>Snap!</strong></em> Web Hosting
+            </span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto" id="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/home">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/blog">Blog</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/articles">Articles</a>
+            </li>
+                <li class="nav-item">
+                <a class="nav-link" href="/user/register">Register</a>
+            </li>
+            <li class="nav-item active">
+                <a class="btn btn-outline-primary btn-md mx-2 login-btn active" href="/user/login">Login</a>
+            </li>
+        </ul>
+        </div>
+    </div>
+</nav>
+{{!-- Navbar End --}}
+
+<div class="container-fluid d-flex justify-content-center align-items-center" id="gradient-background">
+    <form action="/user/auth/login" method="post" class="form-signin p-sm-5 shadow-lg">
+        {{#if err}}
+            {{#each err}}
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    {{this.msg}}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {{/each}}
+        {{/if}}
+        {{#if Err}}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                {{{Err}}}
+                <a href="/logins"><button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></a>
+            </div>
+        {{/if}}
+        {{#if alert}}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{{alert}}}
+                <a href="/login"><button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></a>
+            </div>
+        {{/if}}
+        <h2 class="text-center display-6 text-muted m-5">LOGIN</h2>
+        <div class="mb-3">
+            <label for="username" class="form-label text-muted">Username</label>
+            <input type="text" class="form-control" name="username" {{#if passedUsername}}value="{{passedUsername}}"{{/if}}{{#if email}}value="{{passedEmail}}"{{/if}} placeholder="jdoe">
+            <div class="invalid-feedback">
+                Please enter your username or email.
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label text-muted">Password</label>
+            <input type="password" class="form-control" name="password" placeholder="************">
+            <div class="invalid-feedback">
+                Please enter your password.
+            </div>
+        </div>
+        {{!-- TODO: Implement 'remember-me' --}}
+        <div class="mb-3 form-check mb-4">
+            <label class="form-check-label" for="remember-me">Remember Me</label>
+            <input type="checkbox" class="form-check-input" name="remember-me" value="remember-me">
+        </div>
+        <button type="submit" class="btn-hover gradient my-5 shadow-lg" align="center">Sign In</button>
+        <div class="mb-3 form-check">
+            <p class="text-muted" align="center">Don't have an account? <a href="/user/register" style="text-decoration:none" class="link-register">Sign Up</a></p>
+        </div>
+    </form>
+</div>
+
+{{!-- Footer Start --}}
+<ul class="nav d-flex justify-content-center align-items-center flex-column shadow-lg">
+    <div class="nav-links d-flex my-5">
+        <li class="nav-item">
+            <a class="nav-link" href="/home">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/blog">Blog</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/articles">Articles</a>
+        </li>
+            <li class="nav-item">
+            <a class="nav-link" href="/user/register">Register</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/user/login">Login</a>
+        </li>
+    </div>
+    <div class="footer">
+        <div class="div mx-auto mb-5" style="width:50px;height:1px;background-color:rgba(0, 0, 0, 0.25);"></div>
+        <p>🔥 Created <strong>by</strong> Victor Krenzel. &copy; <em class="text-danger">2022</em> 🔥</p>
+        <div class="socials col-auto p-4 text-center">
+            <a href="https://github.com/vkrenz" target="_blank">
+                <i class="fa-brands fa-github fa-lg px-2"></i>
+            </a>
+            <a href="https://codepen.io/vkrenzel" target="_blank">
+                <i class="fa-brands fa-codepen fa-lg px-2"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/vkrenz/" target="_blank">
+                <i class="fa-brands fa-linkedin fa-lg px-2"></i>
+            </a>
+            
+        </div>
+    </div>
+</ul>
+{{!-- Footer End --}}
+
+{{!-- Custom JS --}}
+<script src="/js/navbar.js"></script>
+{{!-- JQuery CDN --}}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+{{!-- Bootstrap JS CDN --}}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
+
+</body>
+</html>

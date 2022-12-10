@@ -1,0 +1,132 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+:root {
+    --btn-gradient: linear-gradient(to right, #e96443, #904e95);
+    --header-gradient: linear-gradient(to right, #2c3e50, #fd746c);
+    --primary-color: #fd746c;
+    --secondary-color: #2c3e50;
+}
+
+#gradient-background {
+    width: 100vw !important;
+    height: 60vh !important;
+	background: var(--header-gradient);
+	background-size: 400% 400%;
+	animation: bg-gradient 15s ease infinite;
+}
+
+.header-cont {
+    margin-top: 100px;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+}
+
+.cta:hover {
+    color: white;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+section {
+    background: white;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.background{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.parallax {
+    background-attachment: fixed;
+}
+
+.background h1 {
+    color: white;
+    font-weight: 200;
+}
+
+.socials a {
+    color: white;
+    text-decoration: none;
+}
+
+.fa-solid,
+.fa-brands {
+    color: var(--primary-color);
+}
+
+.carousel-caption.heading {
+    top: 45px;
+    bottom: auto;
+    text-align: center !important;
+}
+
+.carousel-caption {
+    text-align: left !important;
+}
+
+.card-text {
+    font-size: large;
+    font-style: italic;
+    line-height: 1.8em;
+    color: #ddd;
+}
+
+.card-text::before {
+    content: '“';
+    font-size: x-large;
+}
+
+.card-text::after {
+    content: '”';
+    font-size: x-large;    
+}
+
+.plans-bg {
+    background-color: #FAF9F6 !important;
+}
+
+.plan {
+    background-color: white;
+}
+
+.plan .fa {
+    color: var(--primary-color);
+}
+
+.price strong{
+    color: var(--primary-color);
+    font-size: xx-large;
+}
+
+.fa-solid.fa-star {
+    color: var(--primary-color) !important;
+}
+
+@keyframes bg-gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}

@@ -1,0 +1,72 @@
+:root {
+    --btn-gradient: linear-gradient(to right, #25aae1, #40e495, #25aae1);
+    --bg-gradient: linear-gradient(45deg, #FDB99B, #ffff1c, #67b26f, #4ca2cd, #3B4371, #2F0743);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+#bottom-panel {
+    width: 100vw;
+    padding: 0;
+}
+
+#info-container {
+    margin-top: 250px;
+}
+
+#background {
+    width: 100vw !important;
+    height: 100vh !important;
+    background-color: white;
+}
+
+#coverPhoto {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 250px;
+    margin-top: 97px;
+}
+
+
+
+.crop {
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 10px solid white;
+}
+
+.crop img {
+    width: auto;
+    height: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.name-container {
+    margin-top: 100px;
+    width: 100%;
+}
+
+#info-col {
+    width: 100%;
+}
+
+#pfp {
+    margin-top: 125px;
+}
+
+.text-muted {
+    margin-bottom: 0;
+}
+
+.modal-body {
+    text-align: left;;
+}

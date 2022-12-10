@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snap! | {{username}}'s Dashboard</title>
+    {{!-- JQuery CDN --}}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    {{!-- Bootstrap CDN --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    {{!-- Font Awesome CDN --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    {{!-- Custom CSS --}}
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/dash.css">
+    {{!-- Bootstrap Tooltip JS --}}
+    <script type='text/javascript'>
+    // JQuery
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+</head>
+<body>
+
+{{!-- Navbar Start --}}
+<nav class="navbar fixed-top navbar-expand-lg bg-light shadow-lg">
+  <div class="container">
+    <a class="navbar-brand" href="/home">
+        <img src="/img/snap-logo.png" alt="Snap! Logo" height="70px" width="auto">
+        <span class="navbar-brand mb-0 h1">
+            <em><strong>Snap!</strong></em> Web Hosting
+        </span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+            <a class="nav-link" href="/home">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/blog">Blog</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/articles">Articles</a>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="btn btn-outline-primary btn-md mx-2 dropdown-toggle user-btn mx-auto" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {{username}}
+            </a>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item active" href="/user/dash/{{username}}">Dashboard</a></li>
+                <li><a class="dropdown-item" href="#">Edit Profile</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="/user/auth/logout">Log Out</a></li>
+            </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+{{!-- Navbar End --}}
+
+<div class="container-fluid" id="background">
+    <div class="row justify-content-center" id="coverPhoto" style="background-image: url('/img/genericCoverPhoto.jpg');">
+        <div class="col-auto position-absolute" id="left-panel">
+            <div class="row justify-content-center mt-4">
+                <div class="crop card-images rounded-circle bg-white" id="pfp">
+                    {{#if profilePhoto}}
+                        <img src="{{profilePhoto}}" alt="{{username}}'s profile photo">
+                    {{else}}
+                        {{!-- Default User Profile Photo --}}
+                        <img src="/img/defaultProfilePhoto.png" alt="{{username}}'s profile photo">
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+        <div class="col d-flex align-items-center" id="bottom-panel">
+            <div class="col-auto mx-auto" id="info-col">
+                <div class="py-2 px-5 rounded d-flex flex-column align-items-center shadow-lg" id="info-container">
+                    <div class="info text-center">
+                        <div class="name-container container-fluid d-flex justify-content-center mb-3">
+                            <h5 class="text-dark font-weight-light">{{fullName}}</h5>
+                            <div class="col-auto text-center px-1">
+                                <p class="text-muted font-weight-light">(@{{username}})</p>
+                            </div>                    
+                            {{#if isAdmin}}
+                                <div class="col-auto text-center px-1 d-inline-block" data-toggle="tooltip" title="Admin Privileges ✅">
+                                    &middot;
+                                    <i class="fa-solid fa-screwdriver-wrench fa-lg mx-1" style="color: #d9534f"></i>
+                                </div>
+                            {{/if}}
+                            <div class="col-auto text-center px-1 d-inline-block">
+                                &middot;
+                                <a type="button" class="btn-primary" data-toggle="tooltip" title="Edit Profile" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@{{username}}"><i class="fa-solid fa-sliders text-primary fa-lg mx-1"></i></a>
+                                {{!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Open modal for @mdo</button> --}}
+                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Profile</h1><small class="bg-danger px-2 py-1 rounded-pill text-light ms-3">Doesn't work yet</small>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form>
+                                                <div class="row mb-3">
+                                                    <div class="col">
+                                                        <label for="username" class="col-form-label">Username</label>
+                                                        <input type="text" class="form-control" id="username" disabled>
+                                                    </div>
+                                                    <div class="col">
+                                                        <label for="fullName" class="col-form-label">Full Name</label>
+                                                        <input type="text" class="form-control" id="fullName" placeholder="{{fullName}}"></input>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-3">
+                                                    <div class="col">
+                                                        <label for="email" class="col-form-label">Email</label>
+                                                        <input type="email" class="form-control" id="email" placeholder="{{email}}"></input>         
+                                                    </div>
+                                                    <div class="col">
+                                                        <label for="phoneNumber" class="col-form-label">Phone Number</label>
+                                                        <input type="text" class="form-control" id="phoneNumber" placeholder="{{phoneNumber}}"></input>     
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-3">
+                                                    <div class="col">
+                                                        <label for="company" class="col-form-label">Company</label>
+                                                        <input type="text" class="form-control" id="company" placeholder="{{companyName}}"></input>         
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-3">
+                                                    <div class="col">
+                                                        <label for="country" class="col-form-label">Country</label>
+                                                        <input type="text" class="form-control" id="country" placeholder="{{country}}"></input>         
+                                                    </div>
+                                                    <div class="col">
+                                                        <label for="city" class="col-form-label">City</label>
+                                                        <input type="text" class="form-control" id="city" placeholder="{{city}}"></input>     
+                                                    </div>
+                                                    <div class="col">
+                                                        <label for="postalCode" class="col-form-label">Postal Code</label>
+                                                        <input type="text" class="form-control" id="postalCode" placeholder="{{postalCode}}"></input>                                            
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-primary">Submit</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> 
+                        </div>
+                    <hr />
+                    </div>
+                    <div class="d-flex flex-column flex-md-row align-items-center mb-4">
+                        <div class="col-auto px-3 py-3 d-flex align-items-center">
+                            <i class="fa-solid fa-envelope me-3"></i><p class="text-muted">{{email}}</p>
+                        </div>
+                        {{#if phoneNumber}}
+                            <div class="col-auto px-3 py-3 d-flex align-items-center">
+                                <i class="fa-solid fa-phone me-3"></i><p class="text-muted">{{phoneNumber}}</p>
+                            </div>
+                        {{/if}}
+                        <div class="col-auto px-3 py-3 d-flex align-items-center">
+                            <i class="fa-solid fa-building me-3"></i><p class="text-muted">{{companyName}}</p>
+                        </div>
+                        {{#unless fullLocation}}
+                            {{#unless countryCity}}
+                                {{#if city}}
+                                    <div class="col-auto px-3 py-3 d-flex align-items-center">
+                                        <i class="fa-solid fa-thumbtack me-3"></i><p class="text-muted">{{city}}</p>
+                                    </div>
+                                {{/if}}
+                                {{#if country}}
+                                    <div class="col-auto px-3 py-3 d-flex align-items-center">
+                                        <i class="fa-solid fa-thumbtack me-3"></i><p class="text-muted">{{country}}</p>
+                                    </div>
+                                {{/if}}
+                            {{/unless}}
+                            {{#if postalCode}}
+                                <div class="col-auto px-3 py-3 d-flex align-items-center">
+                                    <i class="fa-solid fa-thumbtack me-3"></i><p class="text-muted">{{postalCode}}</p>
+                                </div>
+                            {{/if}}
+                        {{/unless}}
+                        {{#if fullLocation}}
+                            <div class="col-auto px-3 py-3 d-flex align-items-center">
+                                <i class="fa-solid fa-thumbtack me-3"></i><p class="text-muted">{{city}}, {{country}} {{postalCode}}</p>
+                            </div>
+                        {{/if}}
+                        {{#if countryCity}}
+                            <div class="col-auto px-3 py-3 d-flex align-items-center">
+                                <i class="fa-solid fa-thumbtack me-3"></i><p class="text-muted">{{city}}, {{country}}</p>
+                            </div>
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{!-- Footer Start --}}
+<ul class="nav d-flex justify-content-center align-items-center flex-column shadow-lg">
+    <div class="nav-links d-flex my-5 flex-column flex-sm-row">
+        <li class="nav-item">
+            <a class="nav-link" href="/home">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/blog">Blog</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/articles">Articles</a>
+        </li>
+            <li class="nav-item">
+            <a class="nav-link" href="/user/register">Register</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/home">Log Out</a>
+        </li>
+    </div>
+    <div class="footer">
+        <div class="div mx-auto mb-5" style="width:50px;height:1px;background-color:rgba(0, 0, 0, 0.25);"></div>
+        <p>🔥 Created <strong>by</strong> Victor Krenzel. &copy; <em class="text-danger">2022</em> 🔥</p>
+        <div class="socials col-auto p-4 text-center">
+            <a href="https://github.com/vkrenz" target="_blank">
+                <i class="fa-brands fa-github fa-lg px-2"></i>
+            </a>
+            <a href="https://codepen.io/vkrenzel" target="_blank">
+                <i class="fa-brands fa-codepen fa-lg px-2"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/vkrenz/" target="_blank">
+                <i class="fa-brands fa-linkedin fa-lg px-2"></i>
+            </a>
+            
+        </div>
+    </div>
+</ul>
+{{!-- Footer End --}}
+
+{{!-- Custom JS --}}
+<script src="/js/navbar.js"></script>
+{{!-- Axios --}}
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+{{!-- Popper JS --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js" integrity="sha512-2rNj2KJ+D8s1ceNasTIex6z4HWyOnEYLVC3FigGOmyQCZc2eBXKgOxQmo3oKLHyfcj53uz4QMsRCWNbLd32Q1g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{{!-- Bootstrap JS CDN --}}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
+
+<script>
+    // const myModal = document.getElementById('myModal')
+    // const myInput = document.getElementById('myInput')
+// 
+    // myModal.addEventListener('shown.bs.modal', () => {
+    // myInput.focus()
+    // })
+
+    const exampleModal = document.getElementById('exampleModal')
+    exampleModal.addEventListener('show.bs.modal', event => {
+    // Button that triggered the modal
+    const button = event.relatedTarget
+    // Extract info from data-bs-* attributes
+    const recipient = button.getAttribute('data-bs-whatever')
+    // If necessary, you could initiate an AJAX request here
+    // and then do the updating in a callback.
+    //
+    // Update the modal's content.
+    const modalBodyInput = exampleModal.querySelector('.modal-body input')
+
+    modalBodyInput.value = recipient
+    })
+</script>
+
+</body>
+</html>

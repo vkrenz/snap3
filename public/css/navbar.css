@@ -1,0 +1,140 @@
+:root {
+    --primary-color: #fd746c;
+    --secondary-color: #2c3e50;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-color);
+}
+
+body {
+    overflow-x: hidden;
+}
+
+#navbar {
+    height: 100px;
+    top: 0;
+    transition: all 0.3s ease-in-out;
+}
+
+.nav-link {
+    color: var(--secondary-color);
+}
+
+.nav-link.active {
+    color: var(--primary-color) !important;
+}
+
+.dropdown-item.active {
+    color: var(--primary-color) !important;
+    background-color: white;
+}
+
+.navbar strong {
+    color: var(--primary-color)
+}
+
+.login-btn {
+    color: var(--primary-color);
+    border-radius: 25px;
+    padding: 5px 15px;
+    padding-bottom: 7px;
+}
+
+.user-btn,
+.user-btn:hover {
+    color: var(--primary-color);  
+    border: none;
+    border-radius: 25px;
+    /* padding: 5px 15px; */
+    padding-bottom: 7px;
+    border: 1px solid white;
+    transition: 0.3s all ease-out;
+}
+
+.user-btn {
+    color: #999999;
+}
+
+.user-btn:hover {
+    border: 1px solid var(--primary-color);
+    background-color: white;
+    transition: 0.3s all ease-in;
+}
+
+.user-btn.show {
+    background-color: var(--primary-color) !important;
+    border: 1px solid var(--primary-color) !important;
+    color: white;
+}
+
+.login-btn:hover {
+    background-color: var(--primary-color);   
+}
+
+.login-btn,
+.login-btn:hover,
+.login-btn:active,
+.login-btn.active,
+.login-btn.active:hover,
+.login-btn.active:active {
+    border: 1px solid var(--primary-color);
+}
+
+.login-btn.active {
+    background-color: var(--primary-color);
+}
+
+.socials a {
+    text-decoration: none;
+}
+
+.socials .fa-solid,
+.socials .fa-brands {
+    color: var(--secondary-color);
+    transition: 0.2s all ease-out;
+}
+
+.socials .fa-solid:hover,
+.socials .fa-solid:active,
+.socials .fa-brands:hover,
+.socials .fa-brands:active {
+    color: var(--primary-color);
+    transform: rotate(-45deg);
+    transition: 0.2s all ease-in;
+}
+
+/** Override Bootstrap @media */
+@media only screen and (max-width: 992px) {
+    .nav-link,
+    .nav-link.active {
+        text-align: center !important;
+    }
+
+    .nav-item {
+        margin: 0 auto;
+    }
+
+    .login-btn {
+        margin: 20px 0;
+    }
+
+    .navbar-brand {
+        margin: 0 auto;
+    }
+
+    .navbar-toggler,
+    .navbar-toggler.collapsed {
+        border: none;
+    }
+}
